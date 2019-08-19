@@ -1,4 +1,12 @@
-{% extends 'articles/base.html %}
+{% extends 'articles/base.html' %}
 {% block body %}
-  
+  <h1>새로운 글 작성</h1>
+  <form action="/articles/create">
+    <label for="title">제목</label>
+    <input type="text" name="title" id="title"> <br> 
+    <label for="text">본문</label>
+    <textarea name="text" id="text" cols="50" rows="15"></textarea> <hr>
+    <input type="submit" name="submit" value="등록">
+    <a href="/articles/"><input type="button" value="취소"></a>
+  </form>
 {% endblock %}
