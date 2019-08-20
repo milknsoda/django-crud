@@ -17,9 +17,9 @@ def create(request):
     title = request.GET.get('title')
     text = request.GET.get('text')
     article = Article.objects.create(title=title, content=text)
-    context = {
-        'article': article
-    }
+    # context = {
+    #     'article': article
+    # }
     # return render(request, 'articles/create.html', context)
     return redirect(f'/articles/{article.pk}/')
 
@@ -29,3 +29,12 @@ def detail(request, article_pk):
         'article': article
     }
     return render(request, 'articles/detail.html', context)
+
+def delete(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    tmp = article.title
+    article.delete()
+    context = {
+        'delete_tmp': tmp
+    }
+    return render(request, 'articles/delete.html', context)
