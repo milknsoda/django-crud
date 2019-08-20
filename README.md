@@ -155,7 +155,9 @@ $ python manage.py shell_plus
   ```
 
   ```
-  
+  INSTALLED_APPS = [
+      'django_extensions',
+  ]
   ```
 
 
