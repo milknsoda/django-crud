@@ -14,8 +14,8 @@ def new(request):
     return render(request, 'articles/new.html')
 
 def create(request):
-    title = request.GET.get('title')
-    text = request.GET.get('text')
+    title = request.POST.get('title')
+    text = request.POST.get('text')
     article = Article.objects.create(title=title, content=text)
     # context = {
     #     'article': article
@@ -49,7 +49,7 @@ def edit(request, article_pk):
 def edit_result(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.GET.get('title') != article.title or request.GET.get('text') != article.content:
-        article.title = request.GET.get('title')
-        article.content = request.GET.get('text')
+        article.title = request.POST.get('title')
+        article.content = request.POST.get('text')
         article.save()
     return redirect('articles:detail', article.pk)
