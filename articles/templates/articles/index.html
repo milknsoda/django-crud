@@ -1,7 +1,7 @@
 {% extends 'articles/base.html' %}
 {% block body %}
   <h1 class="text-center">게시판에 오신 것을 환영합니다.</h1>
-  <a href="{% url 'articles:new' %}" class="btn btn-secondary mt-3">글 작성하기</a>
+  <a href="{% url 'articles:create' %}" class="btn btn-secondary mt-3">글 작성하기</a>
   <table class="table mt-3">
   <thead class="thead-dark">
     <tr>
