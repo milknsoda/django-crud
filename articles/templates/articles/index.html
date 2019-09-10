@@ -1,14 +1,26 @@
 {% extends 'articles/base.html' %}
 {% block body %}
-  <h1>게시판에 오신 것을 환영합니다.</h1>
-  <a href="/articles/new/">글 작성하기</a>
+  <h1 class="text-center">게시판에 오신 것을 환영합니다.</h1>
+  <a href="{% url 'articles:new' %}" class="btn btn-secondary mt-3">글 작성하기</a>
+  <table class="table mt-3">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">제목</th>
+      <th scope="col">작성일자</th>
+      <th scope="col">수정일자</th>
+    </tr>
+  </thead>
+  <tbody>
   {% for article in articles %}
-  <p>{{ article.id }}</p>
-  <h3>{{ article.title }}</h3>
-  <p>{{ article.created_at }}</p>
-  <p>{{ article.updated_at }}</p>
-  <a href="/articles/{{ article.pk }}">글 보러가기</a> |
-  <a href="/articles/{{ article.pk }}/delete">삭제</a>
-  <hr>
+    <tr>
+      <th scope="row">{{ article.id }}</th>
+      <td class="title"><a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a></td>
+      <td class="time_cnu">{{ article.created_at }}</td>
+      <td class="time_cnu">{{ article.updated_at }}</td>
+    </tr>
   {% endfor %}
+  </tbody>
+</table>
+
 {% endblock %}

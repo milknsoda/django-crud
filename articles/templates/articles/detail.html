@@ -2,11 +2,13 @@
 
 {% block body %}
 <h1>{{ article.title }}</h1>
-<h3>{{ article.id }}번째 글</h3>
-<p><pre>{{ article.content }}</pre></p>
-<p>작성일자: {{ article.created_at }}</p>
-<p>최종 수정일자: {{ article.updated_at }}</p>
-<a href="/articles/">목록으로</a> |
-<a href="/articles/{{ article.pk}}/edit/">수정</a> | 
-<a href="/articles/{{ article.pk }}/delete/">삭제</a>
+<h4 class="text-right">{{ article.id }}번째 글</h4>
+<div class="text-justify lead">
+  <p><pre>{{ article.content }}</pre></p>
+</div>
+<p class="text-right time_cnu">작성일자: {{ article.created_at }}</p>
+<p class="text-right time_cnu">최종 수정일자: {{ article.updated_at }}</p>
+<a href="{% url 'articles:index' %}">목록으로</a> |
+<a href="{% url 'articles:edit' article.pk %}">수정</a> | 
+<a href="{% url 'articles:delete' article.pk %}">삭제</a>
 {% endblock %}

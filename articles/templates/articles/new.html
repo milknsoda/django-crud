@@ -1,12 +1,16 @@
 {% extends 'articles/base.html' %}
 {% block body %}
   <h1>새로운 글 작성</h1>
-  <form action="/articles/create">
-    <label for="title">제목</label>
-    <input type="text" name="title" id="title"> <br> 
-    <label for="text">본문</label>
-    <textarea name="text" id="text" cols="50" rows="15"></textarea> <hr>
-    <input type="submit" name="submit" value="등록">
-    <a href="/articles/"><input type="button" value="취소"></a>
+  <form action="{% url 'articles:create' %}">
+    <div class="form-group">
+      <label for="title">제목</label>
+      <input type="text" name="title" class="form-control" id="title" aria-describedby="emailHelp" placeholder="제목을 입력하세요.">
+    </div>
+    <div class="form-group">
+      <label for="text">내용</label>
+      <textarea class="form-control" id="text" name="text" rows="3" placeholder="내용을 입력해주세요."></textarea>
+    </div>
+    <button type="submit" class="btn btn-secondary">등록</button>
+    <a href="{% url 'articles:index' %}"><button type="button" class="btn btn-secondary">취소</button></a>
   </form>
 {% endblock %}
