@@ -278,3 +278,41 @@ Article.objects.order_by('title') # title를 기준으로 오름차순 정렬
 
 
 
+```bash
+In [1]: context
+Out[1]: {'articles': <QuerySet [<Article: 33: ㅎㅇㅎ>, <Article: 32: ㅎㅇㅎㅇ>, <Article: 31: POST>, <Article: 30: 작성>, <Article: 29:
+작성>, <Article: 28: 새로운 글>, <Article: 26: >, <Article: 25: 아무거나>, <Article: 24: 게시판 만들기>, <Article: 23: Hello!!>, <Article: 8: 안녕하세요>, <Article: 7: asdf>, <Article: 6: Hello>, <Article: 5: 안녕하세요>, <Article: 4: 안녕하세요>, <Article: 1: 제목>]>}
+
+In [2]: request
+Out[2]: <WSGIRequest: GET '/articles/'>
+
+In [3]: request.method
+Out[3]: 'GET'
+
+In [4]: request.path
+Out[4]: '/articles/'
+
+In [5]: request.body
+Out[5]: b''
+
+In [6]: request.content_type
+Out[6]: 'text/plain'
+```
+
+```bash
+In [1]: request
+Out[1]: <WSGIRequest: POST '/articles/create/'>
+
+In [2]: request.method
+Out[2]: 'POST'
+
+In [3]: request.body
+Out[3]: b'csrfmiddlewaretoken=UWtWutQFrWob6BgRpSGfvJPvjcdZYgqmJmuZRMYoRqzkdYqCjNDoIwqJxza1OsR3&title=%E3%85%8E%E3%85%85%E3%85%8E&text=%E3%85%87%E3%85%85%E3%85%87'
+
+In [4]: request.POST
+Out[4]: <QueryDict: {'csrfmiddlewaretoken': ['UWtWutQFrWob6BgRpSGfvJPvjcdZYgqmJmuZRMYoRqzkdYqCjNDoIwqJxza1OsR3'], 'title': ['ㅎㅅㅎ'], 'text': ['ㅇㅅㅇ']}>
+
+In [5]: request.content_type
+Out[5]: 'application/x-www-form-urlencoded'
+```
+

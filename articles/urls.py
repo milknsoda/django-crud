@@ -11,5 +11,5 @@ urlpatterns = [
     path('<int:article_pk>/', views.detail, name='detail'),
     path('<int:article_pk>/delete/', views.delete, name='delete'),
     # path('<int:article_pk>/edit/', views.edit, name='edit'),
-    path('<int:article_pk>/edit_result/', views.edit_result, name='update'),
+    path('<int:article_pk>/edit_result/', views.update, name='update'),
 ]

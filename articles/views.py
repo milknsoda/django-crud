@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_POST
 from IPython import embed
 
 from .models import Article
@@ -13,15 +14,15 @@ def index(request):
     # embed()
     return render(request, 'articles/index.html', context)
 
-def new(request):
-    # if request.method == 'GET':
-    return render(request, 'articles/new.html')
-    # else: # 'POST'
-    #     title = request.POST.get('title')
-    #     content = request.POST.get('content')
-    #     article = Article(title=title, content=content)
-    #     article.save()
-    #     return redirect('articles:detail', article.pk)
+# def new(request):
+#     # if request.method == 'GET':
+#     return render(request, 'articles/new.html')
+#     # else: # 'POST'
+#     #     title = request.POST.get('title')
+#     #     content = request.POST.get('content')
+#     #     article = Article(title=title, content=content)
+#     #     article.save()
+#     #     return redirect('articles:detail', article.pk)
 
 def create(request):
     # 저장 로직
@@ -46,7 +47,7 @@ def detail(request, article_pk):
     }
     return render(request, 'articles/detail.html', context)
 
-from django.views.decorators.http import require_POST
+@require_POST
 def delete(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     article.delete()
@@ -58,14 +59,14 @@ def delete(request, article_pk):
     # }
     # return render(request, 'articles/delete.html', context)
 
-def edit(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
-    context = {
-        'article': article
-    }
-    return render(request, 'articles/edit.html', context)
+# def edit(request, article_pk):
+#     article = Article.objects.get(pk=article_pk)
+#     context = {
+#         'article': article
+#     }
+#     return render(request, 'articles/edit.html', context)
 
-def edit_result(request, article_pk):
+def update(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.method == 'POST':
         article.title = request.POST.get('title')
@@ -77,3 +78,4 @@ def edit_result(request, article_pk):
             'article': article
         }
         return render(request, 'articles/edit.html', context)
+
