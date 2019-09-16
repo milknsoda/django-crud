@@ -14,4 +14,32 @@
   {% csrf_token %}
   <input type="submit" value="삭제">
 </form>
+<hr>
+<h4>댓글 작성</h4>
+<p>댓글 수: {{ comments.count }}</p>
+<form action="{% url 'articles:comment_create' article.pk %}", method="POST">
+  {% csrf_token %}
+  <input type="text" name="comment">
+  <input type="submit" value="작성!">
+</form>
+{% if messages %}
+<ul class="messages text-info">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.info }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<hr>
+{% for comment in comments %}
+<p>{{ comment.content }}</p>
+<p><sub>{{ comment.created_at }}</sub></p>
+<form action="{% url 'articles:comment_delete' article.pk comment.pk %}", method="POST">
+  {% csrf_token %}
+  <input type="submit" value="삭제?">
+</form>
+<br>
+{% empty %} <!-- 비어있는 경우에는 if문 사용하지 않아도 표현 가능! -->
+<p>댓글이 없어요! T^T</p>
+<br>
+{% endfor%}
 {% endblock %}
