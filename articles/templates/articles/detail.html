@@ -22,13 +22,6 @@
   <input type="text" name="comment">
   <input type="submit" value="작성!">
 </form>
-{% if messages %}
-<ul class="messages text-info">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.info }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
 <hr>
 {% for comment in comments %}
 <p>{{ comment.content }}</p>

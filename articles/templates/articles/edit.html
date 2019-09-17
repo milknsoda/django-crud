@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-<form action="{% url 'articles:update' article.pk %}" method="POST">
+{% comment %} <form action="{# url 'articles:update' article.pk #}" method="POST">
   {% csrf_token %}
   <div class="form-group">
     <label for="title">제목</label>
@@ -23,6 +23,13 @@
     <label for="text">내용</label>
     <textarea class="form-control" id="text" name="text" rows="3">{{ article.content }}</textarea>
   </div>
+  <button type="submit" class="btn btn-secondary">수정</button>
+  <a href="{% url 'articles:detail' article.pk %}"><button type="button" class="btn btn-secondary">취소</button></a>
+</form> {% endcomment %}
+
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ article_form.as_p }}
   <button type="submit" class="btn btn-secondary">수정</button>
   <a href="{% url 'articles:detail' article.pk %}"><button type="button" class="btn btn-secondary">취소</button></a>
 </form>
