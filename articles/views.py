@@ -92,10 +92,12 @@ def update(request, article_pk):
     article = Article.objects.get(pk=article_pk)
     if request.method == 'POST':
         article_form = ArticleForm(request.POST, instance=article)
-        if article_form.is_valid():
+        if article_form.is_valid() and article_form.has_changed():
             article = article_form.save()
             messages.success(request, '글이 수정되었습니다.')
             return redirect('articles:detail', article_pk)
+        else:
+            messages.warning(request, '수정할 내용이 없습니다.')
     else:
         article_form = ArticleForm(instance=article)
     context = {

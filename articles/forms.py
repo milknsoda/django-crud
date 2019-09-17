@@ -12,6 +12,23 @@ class ArticleForm(forms.ModelForm):
     #         }
     #     )
     # )
+    title = forms.CharField(
+        label='제목',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '제목을 입력바랍니다.'
+            }
+        )
+    )
+    content = forms.CharField(
+        label='내용',
+        widget=forms.Textarea(
+            attrs={
+                'placeholder': '내용을 입력바랍니다.',
+            }
+        )
+    )
+        
     class Meta:
         model = Article
         fields = '__all__'
