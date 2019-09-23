@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles', # static file : css, js
     'django_extensions',
     'bootstrap4',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
