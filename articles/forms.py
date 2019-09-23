@@ -49,7 +49,7 @@ class CommentForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'placeholder': '...댓글댓글댓글댓글...',
-                'row': 3,
+                'rows': 3,
             }
         )
     )

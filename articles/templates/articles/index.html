@@ -1,6 +1,12 @@
 {% extends 'articles/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'articles/style.css' %}">
+
+{% endblock %}
 {% block body %}
-  <h1 class="text-center">게시판에 오신 것을 환영합니다.</h1>
+  <img src="{% static "articles/bg.jpg" %}" alt="스폰지밥">
+  <h1 class="text-center title">게시판에 오신 것을 환영합니다.</h1>
   <a href="{% url 'articles:create' %}" class="btn btn-secondary mt-3">글 작성하기</a>
   <table class="table mt-3">
   <thead class="thead-dark">
