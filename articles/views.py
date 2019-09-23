@@ -4,7 +4,7 @@ from django.contrib import messages
 from IPython import embed
 
 from .models import Article, Comment
-from .forms import ArticleForm
+from .forms import ArticleForm, CommentForm
 
 # Create your views here.
 def index(request):
@@ -64,9 +64,11 @@ def detail(request, article_pk):
     # article = Article.objects.get(pk=article_pk)
     article = get_object_or_404(Article, pk=article_pk)
     comment = article.comment_set.all()
+    comment_form = CommentForm()
     context = {
         'article': article,
-        'comments': comment
+        'comments': comment,
+        'comment_form': comment_form,
     }
     return render(request, 'articles/detail.html', context)
 
@@ -108,9 +110,21 @@ def update(request, article_pk):
 
 @require_POST
 def comment_create(request, article_pk):
-    content = request.POST.get('comment')
-    comment = Comment.objects.create(content=content, article_id=article_pk)
-    messages.success(request, '댓글이 등록되었습니다.')
+    # 1. modelform에 사용자 입력값 넣고
+    comment_form = CommentForm(request.POST)
+    # 2. 검증하고,
+    if comment_form.is_valid():
+    # 3. 맞으면 저장!
+        # 3-1. 사용자 입력값으로 comment instance 생성(저장은 X)
+        comment = comment_form.save(commit=False)
+        # 3-2. FK 넣고 저장
+        comment.article_id = article_pk
+        comment.save()
+    # comment = Comment.objects.create(content=content, article_id=article_pk)
+        messages.success(request, '댓글이 등록되었습니다.')
+    else:
+        messages.warning(request, '댓글 작성에 실패하였습니다.')
+    # 4. return redirect
     return redirect('articles:detail', article_pk)
 
 @require_POST
