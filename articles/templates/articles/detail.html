@@ -1,13 +1,21 @@
 {% extends 'articles/base.html' %}
 
+{% load static %}
 {% load bootstrap4 %}
 
 {% block body %}
 <h1>{{ article.title }}</h1>
 <h4 class="text-right">{{ article.id }}번째 글</h4>
-<div class="text-justify lead">
+<div class="lead d-flex justify-content-center">
+  {% if article.image %}
+  <div>
+    <img src="{{ article.image.url }}" alt="{{ article.image.name }}">
+  </div>
+  <br>
+  {% endif %}
   <p><pre>{{ article.content }}</pre></p>
 </div>
+
 <p class="text-right time_cnu">작성일자: {{ article.created_at }}</p>
 <p class="text-right time_cnu">최종 수정일자: {{ article.updated_at }}</p>
 <a href="{% url 'articles:index' %}">목록으로</a>

@@ -31,7 +31,7 @@ def create(request):
     # POST 요청 -> 검증 및 저장
         # title = request.POST.get('title')
         # content = request.POST.get('content')
-        article_form = ArticleForm(request.POST)
+        article_form = ArticleForm(request.POST, request.FILES)
         # embed()
         # 검증
         if article_form.is_valid():

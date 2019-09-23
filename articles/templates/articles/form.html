@@ -1,5 +1,5 @@
 {% extends 'articles/base.html' %}
-
+{% load static %}
 {% load bootstrap4 %}
 
 {% block body %}
@@ -8,7 +8,7 @@
 {% else %}
     <h1>글 수정하기</h1>
 {% endif %}
-<form action="" method="POST" class='form'>
+<form action="" method="POST" class='form' enctype='multipart/form-data'>
   {% csrf_token %}
   {% bootstrap_form article_form %}
   {% buttons %}
