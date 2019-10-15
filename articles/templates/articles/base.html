@@ -45,11 +45,21 @@
       <div class="navbar-nav">
         <a class="nav-item nav-link text-light active" href="{% url 'articles:index' %}">Home <span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link text-light" href="{% url 'articles:create' %}">New</a>
-        <a class="nav-item nav-link text-light" href="{% url 'accounts:signup' %}">Sign Up</a>
+        
       </div>
+      {% if user.is_authenticated %}
+      <!-- 로그인이 되어 있다면, -->
       <div class="navbar-nav">
-        <a class="nav-item nav-link text-light disabled">{{ user.username }}</a> <!-- user만 context에 넣지 않고 사용할 수 있다.(이미 request에 담겨있음) -->
+        <a class="nav-item nav-link text-light disabled">{{ user.username }}</a>  <!-- user만 context에 넣지 않고 사용할 수 있다.(이미 request에 담겨있음) -->
+        <a class="nav-item nav-link text-light" href="{% url 'accounts:logout' %}">LOGOUT</a> 
       </div>
+      <!-- 로그인이 되어 있지 않다면, -->
+      {% else %}
+      <div class="navbar-nav">
+        <a class="nav-item nav-link text-light" href="{% url 'accounts:signup' %}">Sign Up</a>
+        <a class="nav-item nav-link text-light" href="{% url 'accounts:login' %}">LOGIN</a> 
+      </div>
+      {% endif %}
     </div>
   </nav>
   
