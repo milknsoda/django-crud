@@ -37,15 +37,18 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-    <a class="navbar-brand text-light" href="#">게시판</a>
+    <a class="navbar-brand text-light disabled" href="#">게시판</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon bg-light"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-item nav-link text-light active" href="{% url 'articles:index' %}">Home <span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link text-light" href="{% url 'articles:create' %}">New</a>
         <a class="nav-item nav-link text-light" href="{% url 'accounts:signup' %}">Sign Up</a>
+      </div>
+      <div class="navbar-nav">
+        <a class="nav-item nav-link text-light disabled">{{ user.username }}</a> <!-- user만 context에 넣지 않고 사용할 수 있다.(이미 request에 담겨있음) -->
       </div>
     </div>
   </nav>

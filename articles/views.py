@@ -9,7 +9,7 @@ from .forms import ArticleForm, CommentForm
 # Create your views here.
 def index(request):
     articles = Article.objects.order_by('-id')
-    embed()
+    # embed()
     context = {
         'articles': articles
     }
