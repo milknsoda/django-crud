@@ -37,7 +37,7 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-    <a class="navbar-brand text-light disabled" href="#">게시판</a>
+    <a class="navbar-brand text-light disabled">게시판</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon bg-light"></span>
     </button>
@@ -50,7 +50,7 @@
       {% if user.is_authenticated %}
       <!-- 로그인이 되어 있다면, -->
       <div class="navbar-nav">
-        <a class="nav-item nav-link text-light disabled">{{ user.username }}</a>  <!-- user만 context에 넣지 않고 사용할 수 있다.(이미 request에 담겨있음) -->
+        <a class="nav-item nav-link text-light" href="{% url 'accounts:info' %}">{{ user.username }}</a>  <!-- user만 context에 넣지 않고 사용할 수 있다.(이미 request에 담겨있음) -->
         <a class="nav-item nav-link text-light" href="{% url 'accounts:logout' %}">LOGOUT</a> 
       </div>
       <!-- 로그인이 되어 있지 않다면, -->
@@ -81,6 +81,6 @@
   </footer>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src={% static "bootstrap/js/bootstrap.min.js"%}></script>
+  <script src={% static "bootstrap/js/bootstrap.min.js" %}></script>
 </body>
 </html>

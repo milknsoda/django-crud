@@ -134,3 +134,7 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+# AUTH
+LOGIN_URL = '/accounts/login/' # default!! @login_required에서 사용됨

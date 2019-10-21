@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from IPython import embed
 
@@ -26,6 +27,7 @@ def index(request):
 #     #     article.save()
 #     #     return redirect('articles:detail', article.pk)
 
+@login_required
 def create(request):
     # 저장 로직
     if request.method == 'POST':

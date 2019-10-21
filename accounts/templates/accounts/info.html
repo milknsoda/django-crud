@@ -1,0 +1,9 @@
+{% extends 'articles/base.html' %}
+
+{% block body %}
+<h3>{{ user.username }}</h3>
+<p>{{ user.last_name }} {{ user.first_name }}</p>
+<p>{{ user.email }}</p>
+<a href="{% url 'accounts:update' %}">정보 수정</a> |
+<a href="{% url 'accounts:password_change' %}">비밀번호 변경</a>
+{% endblock %}
