@@ -31,7 +31,7 @@ class ArticleForm(forms.ModelForm):
         
     class Meta:
         model = Article
-        fields = '__all__'
+        exclude = ['user']
         # fields = ('title', )
         # exclude = ('title', )
         # 위젯 설정 1.

@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, User
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+from .forms import CustomUserCreationForm
 from IPython import embed
 
 from .forms import CustomUserChangeForm
@@ -13,13 +15,13 @@ def signup(request):
     if request.user.is_authenticated:
         return redirect('articles:index')
     if request.method == 'POST':
-        new_user = UserCreationForm(request.POST)
+        new_user = CustomUserCreationForm(request.POST)
         if new_user.is_valid():
             user = new_user.save()
             auth_login(request, user)
             return redirect('articles:index')
     else:
-        new_user = UserCreationForm()
+        new_user = CustomUserCreationForm()
     context = {
         'new_user': new_user
     }
@@ -63,11 +65,7 @@ def update(request):
 
 @login_required
 def info(request):
-    user = request.user
-    context = {
-        'user': user
-    }
-    return render(request, 'accounts/info.html', context)
+    return render(request, 'accounts/info.html')
 
 @login_required
 def password_change(request):

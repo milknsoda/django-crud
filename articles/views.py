@@ -42,7 +42,9 @@ def create(request):
             # title = article_form.cleaned_data.get('title')
             # content = article_form.cleaned_data.get('content')
             # article = Article(title=title, content=content)
-            article = article_form.save()
+            article = article_form.save(commit=False)
+            article.user = request.user
+            article.save()
             messages.success(request, '새로운 글이 등록되었습니다.')
             # redirect
             return redirect('articles:detail', article.pk)
@@ -78,8 +80,12 @@ def detail(request, article_pk):
 @require_POST
 def delete(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
-    article.delete()
-    return redirect('articles:index')
+    if request.user == article.user:
+        article.delete()
+        return redirect('articles:index')
+    else:
+        messages.warning(request, '삭제할 권한이 없습니다.')
+        return redirect('articles:detail', article_pk)
     # tmp = article.title
     # article.delete()
     # context = {
@@ -96,20 +102,24 @@ def delete(request, article_pk):
 
 def update(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
-    if request.method == 'POST':
-        article_form = ArticleForm(request.POST, instance=article)
-        if article_form.is_valid() and article_form.has_changed():
-            article = article_form.save()
-            messages.success(request, '글이 수정되었습니다.')
-            return redirect('articles:detail', article_pk)
+    if request.user == article.user:
+        if request.method == 'POST':
+            article_form = ArticleForm(request.POST, instance=article)
+            if article_form.is_valid() and article_form.has_changed():
+                article = article_form.save()
+                messages.success(request, '글이 수정되었습니다.')
+                return redirect('articles:detail', article_pk)
+            else:
+                messages.warning(request, '수정할 내용이 없습니다.')
         else:
-            messages.warning(request, '수정할 내용이 없습니다.')
+            article_form = ArticleForm(instance=article)
+        context = {
+            'article_form': article_form,
+        }
+        return render(request, 'articles/form.html', context)
     else:
-        article_form = ArticleForm(instance=article)
-    context = {
-        'article_form': article_form,
-    }
-    return render(request, 'articles/form.html', context)
+        messages.warning(request, '수정할 권한이 없습니다.')
+        return redirect('articles:detail', article_pk)
 
 @require_POST
 def comment_create(request, article_pk):

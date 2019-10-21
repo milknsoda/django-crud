@@ -8,14 +8,13 @@
 <h4 class="text-right">{{ article.id }}번째 글</h4>
 <div class="lead d-flex justify-content-center">
   {% if article.image %}
-  <div>
-    <img src="{{ article.image.url }}" alt="{{ article.image.name }}">
-  </div>
+  <img src="{{ article.image.url }}" alt="{{ article.image.name }}">
   <br>
   {% endif %}
   <p><pre>{{ article.content }}</pre></p>
 </div>
 
+<p class="text-right">글쓴이 : {{ article.user }}</p>
 <p class="text-right time_cnu">작성일자: {{ article.created_at }}</p>
 <p class="text-right time_cnu">최종 수정일자: {{ article.updated_at }}</p>
 <a href="{% url 'articles:index' %}">목록으로</a>
