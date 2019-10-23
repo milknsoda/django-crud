@@ -26,8 +26,11 @@
 </form>
 {% endif %}
 <hr>
+{% if user.is_authenticated %}
 <h4>댓글 작성</h4>
+{% endif %}
 <p>댓글 수: {{ comments.count }}</p>
+{% if user.is_authenticated %}
 <form action="{% url 'articles:comment_create' article.pk %}", method="POST">
   {% csrf_token %}
   {% bootstrap_form comment_form %}
@@ -36,6 +39,7 @@
   {% endbuttons %}
 </form>
 <hr>
+{% endif %}
 {% for comment in comments %}
 <p>{{ comment.content }}</p>
 <p><sub>작성자 : {{ comment.user }}</sub></p>
