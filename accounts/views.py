@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+
 from .forms import CustomUserCreationForm
 from IPython import embed
 
@@ -81,3 +82,11 @@ def password_change(request):
         'form': form
     }
     return render(request, 'accounts/update.html', context)
+
+def profile(request, account_pk):
+    User = get_user_model()
+    user = get_object_or_404(User, pk=account_pk)
+    context = {
+        'user_profile': user
+    }
+    return render(request, 'accounts/profile.html', context)

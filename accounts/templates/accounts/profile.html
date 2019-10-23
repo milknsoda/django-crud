@@ -1,0 +1,26 @@
+{% extends 'articles/base.html' %}
+{% load bootstrap4 %}
+
+{% block body %}
+<h1>{{ user_profile.username }}의 프로필</h1>
+{% if user == user_profile %}
+<div class="container">
+  <h2>작성한 글 목록 <sub>({{ user_profile.article_set.count }})</sub></h2>
+  {% for article in user_profile.article_set.all %}
+  <p><a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a></p>
+  {% endfor %}
+
+  <h2>내가 쓴 댓글 <sub>({{ user_profile.comment_set.count }})</sub></h2>
+  {% for comment in user_profile.comment_set.all %}
+  <p><a href="{% url 'articles:detail' comment.article.pk %}">{{ comment.article.pk }}번째 글의 {{ comment.content }}</a></p>
+  {% endfor %}
+
+  <h2>내가 좋아요 한 글 <sub>({{ user_profile.like_articles.count }})</sub></h2>
+  {% for like in user_profile.like_articles.all %}
+  <p><a href="{% url 'articles:detail' like.pk %}">{{ like.title }}</a></p>
+  {% endfor %}
+</div>
+{% else %}
+  <h3 class="text-center">공개되지 않은 정보입니다.</h3>
+{% endif %}
+{% endblock %}

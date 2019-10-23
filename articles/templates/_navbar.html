@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <a class="navbar-brand text-light disabled">게시판</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon bg-light"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link text-light active" href="{% url 'articles:index' %}">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link text-light" href="{% url 'articles:create' %}">New</a>
+      
+    </div>
+    {% if user.is_authenticated %}
+    <!-- 로그인이 되어 있다면, -->
+    <div class="navbar-nav">
+      {% load gravatar %}
+      <img src="{{ user.email|makehash }}" alt="">
+      <a class="nav-item nav-link text-light" href="{% url 'accounts:info' %}">{{ user.username }}</a>  <!-- user만 context에 넣지 않고 사용할 수 있다.(이미 request에 담겨있음) -->
+      <a class="nav-item nav-link text-light" href="{% url 'accounts:logout' %}">LOGOUT</a> 
+    </div>
+    <!-- 로그인이 되어 있지 않다면, -->
+    {% else %}
+    <div class="navbar-nav">
+      <a class="nav-item nav-link text-light" href="{% url 'accounts:signup' %}">Sign Up</a>
+      <a class="nav-item nav-link text-light" href="{% url 'accounts:login' %}">LOGIN</a> 
+    </div>
+    {% endif %}
+  </div>
+</nav>

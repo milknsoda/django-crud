@@ -6,15 +6,25 @@
 {% block body %}
 <h1>{{ article.title }}</h1>
 <h4 class="text-right">{{ article.id }}번째 글</h4>
-<div class="lead d-flex justify-content-center">
+
+<div class="lead d-inline-block" style="width:100%;">
   {% if article.image %}
   <img src="{{ article.image.url }}" alt="{{ article.image.name }}">
   <br>
   {% endif %}
-  <p><pre>{{ article.content }}</pre></p>
+  <p>{{ article.content }}</p>
+  <p class="text-center"><sub>좋아요: {{ article.like_users.count }}</sub></p>
+  
+  <div class="d-inline-block text-center" style="width: 100%;">
+    {% if user in article.like_users.all %}
+    <a href="{% url 'articles:like' article.pk %}" class="text-center"><i class="fas fa-heart text-danger animated infinite pulse delay-1s"></i></a>
+    {% else %}
+    <a href="{% url 'articles:like' article.pk %}" class="text-center"><i class="far fa-heart text-danger animated infinite rubberBand delay-1s"></i></i></a>
+    {% endif %}
+  </div>
 </div>
 
-<p class="text-right">글쓴이 : {{ article.user }}</p>
+<p class="text-right">글쓴이 : <a href="{% url 'accounts:profile' article.user.pk %}">{{ article.user }}</a></p>
 <p class="text-right time_cnu">작성일자: {{ article.created_at }}</p>
 <p class="text-right time_cnu">최종 수정일자: {{ article.updated_at }}</p>
 <a href="{% url 'articles:index' %}">목록으로</a>
