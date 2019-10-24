@@ -3,6 +3,18 @@
 
 {% block body %}
 <h1>{{ user_profile.username }}의 프로필</h1>
+{% comment %} 쿼리를 던지는 일을 줄이기 위한 방법 with {% endcomment %}
+{% with user_profile.followings.all as followings %} 
+  {% if user != user_profile %}
+      {% if user in followings %}
+        <a href="{% url 'accounts:follow' user_profile.pk %}"><i class="far fa-check-circle"></i> unfollow</a>
+      {% else %}
+        <a href="{% url 'accounts:follow' user_profile.pk %}"><i class="far fa-circle"></i> follow</a>
+      {% endif %}
+  {% endif %}
+
+<p>팔로워: {{ followings|length }} | 팔로우: {{ user_profile.followers.count }}</p>
+{% endwith %}
 {% if user == user_profile %}
 <div class="container">
   <h2>작성한 글 목록 <sub>({{ user_profile.article_set.count }})</sub></h2>

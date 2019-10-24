@@ -7,9 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 
 from .forms import CustomUserCreationForm
+from .forms import CustomUserChangeForm
+
 from IPython import embed
 
-from .forms import CustomUserChangeForm
 
 # Create your views here.
 def signup(request):
@@ -90,3 +91,14 @@ def profile(request, account_pk):
         'user_profile': user
     }
     return render(request, 'accounts/profile.html', context)
+
+def follow(request, account_pk):
+    User = get_user_model()
+    user_profile = get_object_or_404(User, pk=account_pk)
+    # 프로필 주인을 팔로우 한 적이 있으면,
+    if user_profile in request.user.followers.all():
+        request.user.followers.remove(user_profile)
+    # 프로필 주인을 팔로우 하지 않았으면
+    else:
+        request.user.followers.add(user_profile)
+    return redirect('accounts:profile', account_pk)
