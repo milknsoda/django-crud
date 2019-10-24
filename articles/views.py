@@ -6,7 +6,7 @@ from django.http import HttpResponseForbidden, HttpResponse
 from django.contrib import messages
 from IPython import embed
 
-from .models import Article, Comment
+from .models import Article, Comment, HashTag
 from .forms import ArticleForm, CommentForm
 
 # Create your views here.
@@ -47,6 +47,19 @@ def create(request):
             article = article_form.save(commit=False)
             article.user = request.user
             article.save()
+            # 해시태그 저장 및 연결 작업
+            sep = article.content.split()
+            for idx, word in enumerate(sep):
+                if word.startswith('#'):
+                    # if HashTag.objects.filter(content=word).exists():
+                    #     tag = HashTag.objects.get(content=word)
+                    # else:
+                    #     tag = HashTag.objects.create(content=word)
+                    # article.hashtags.add(tag)
+                    hashtag, created = HashTag.objects.get_or_create(content=word)
+                    article.hashtags.add(hashtag)
+                    # (오브젝트, 만들어진 것인지 가져온 것인지)
+
             messages.success(request, '새로운 글이 등록되었습니다.')
             # redirect
             return redirect('articles:detail', article.pk)
@@ -111,6 +124,14 @@ def update(request, article_pk):
             if article_form.is_valid() and article_form.has_changed():
                 article = article_form.save()
                 messages.success(request, '글이 수정되었습니다.')
+                #-----------------------------------------------------------------------
+                # 해시태그 수정
+                article.hashtags.clear()
+                for word in article.content.split():
+                    if word.startswith('#'):
+                        hashtag, created = HashTag.objects.get_or_create(content=word)
+                        article.hashtags.add(hashtag)
+                #-----------------------------------------------------------------------
                 return redirect('articles:detail', article_pk)
             else:
                 messages.warning(request, '수정할 내용이 없습니다.')
@@ -169,3 +190,10 @@ def like(request, article_pk):
     else:
         article.like_users.add(user)
     return redirect('articles:detail', article_pk)
+
+def hashtag(request, tag_pk):
+    hashtag = get_object_or_404(HashTag, pk=tag_pk)
+    context = {
+        'hashtag': hashtag
+    }
+    return render(request, 'articles/hashtag.html', context)

@@ -1,0 +1,17 @@
+{% extends 'articles/base.html' %}
+
+{% block body %}
+
+<h1>{{ hashtag.content }}</h1>
+{% for article in hashtag.article_set.all %}
+<h3><a href="{% url 'articles:detail' article.pk %}">
+        {% if article.image %}
+            <img src="{{ article.image_thumbnail.url }}" alt="">
+        {% else %}
+            {{ article.title }}
+        {% endif %}
+    </a>
+</h3>
+{% endfor %}
+
+{% endblock %}

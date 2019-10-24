@@ -92,6 +92,7 @@ def profile(request, account_pk):
     }
     return render(request, 'accounts/profile.html', context)
 
+@login_required
 def follow(request, account_pk):
     User = get_user_model()
     user_profile = get_object_or_404(User, pk=account_pk)

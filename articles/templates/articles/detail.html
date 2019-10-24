@@ -12,7 +12,8 @@
   <img src="{{ article.image.url }}" alt="{{ article.image.name }}">
   <br>
   {% endif %}
-  <p>{{ article.content }}</p>
+  {% load hashtag %}
+  <p>{{ article|make_link|safe }}</p>
   <p class="text-center"><sub>좋아요: {{ article.like_users.count }}</sub></p>
   
   <div class="d-inline-block text-center" style="width: 100%;">
