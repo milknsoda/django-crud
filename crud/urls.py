@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('articles/', include('articles.urls')),
     path('accounts/', include('accounts.urls')),
-    path('hashtags/<int:tag_pk>', views.hashtag, name='hashtag')
+    path('accounts/', include('allauth.urls')), # 반드시 기존 accounts app 밑에
+    path('hashtags/<int:tag_pk>/', views.hashtag, name='hashtag')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
