@@ -14,13 +14,13 @@
   {% endif %}
   {% load hashtag %}
   <p>{{ article|make_link|safe }}</p>
-  <p class="text-center"><sub>좋아요: {{ article.like_users.count }}</sub></p>
+  <p  class="text-center"><sub id="like-count">좋아요: {{ article.like_users.count }}</sub></p>
   
   <div class="d-inline-block text-center" style="width: 100%;">
     {% if user in article.like_users.all %}
-    <a href="{% url 'articles:like' article.pk %}" class="text-center"><i class="fas fa-heart text-danger animated infinite pulse delay-1s"></i></a>
+    <i id="like-button" data-id="{{ article.id }}" class="fas fa-heart text-danger animated infinite pulse delay-1s"></i>
     {% else %}
-    <a href="{% url 'articles:like' article.pk %}" class="text-center"><i class="far fa-heart text-danger animated infinite rubberBand delay-1s"></i></i></a>
+    <i id="like-button" data-id="{{ article.id }}" class="far fa-heart text-danger animated infinite rubberBand delay-1s"></i></i>
     {% endif %}
   </div>
 </div>
@@ -66,4 +66,29 @@
 <p>댓글이 없어요! T^T</p>
 <br>
 {% endfor%}
+{% endblock %}
+
+{% block script %}
+<script>
+  const likeButton = document.querySelector('#like-button')
+  const likeCount = document.querySelector('#like-count')
+  likeButton.addEventListener('click', function(event) {
+    console.log(event.target.dataset.id)
+    axios.get(`/articles/${event.target.dataset.id}/like/`)
+      .then(response => {
+        console.log(response)
+        console.log(event.target)
+        if (response.data.is_liked) {
+          event.target.classList.remove('far')
+          event.target.classList.add('fas')
+        } else {
+          event.target.classList.remove('fas')
+          event.target.classList.add('far')
+        }
+        console.log(likeCount)
+        likeCount.innerText = `좋아요: ${response.data.like_count}`
+        
+      })
+  })
+</script>
 {% endblock %}

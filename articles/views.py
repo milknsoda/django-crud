@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied # 오류를 띄울 수 있음
-from django.http import HttpResponseForbidden, HttpResponse
+from django.http import HttpResponseForbidden, HttpResponse, JsonResponse
 from django.contrib import messages
 from IPython import embed
 
@@ -185,11 +185,15 @@ def comment_delete(request, article_pk, comment_pk):
 def like(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     user = request.user
+    is_liked = True
     if user in article.like_users.all():
         article.like_users.remove(user)
+        is_liked = False
     else:
         article.like_users.add(user)
-    return redirect('articles:detail', article_pk)
+        is_liked = True
+    like_count = article.like_users.count()
+    return JsonResponse({'is_liked': is_liked, 'like_count': like_count})
 
 def hashtag(request, tag_pk):
     hashtag = get_object_or_404(HashTag, pk=tag_pk)
